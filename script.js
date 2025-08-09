@@ -1,179 +1,88 @@
 
 function gameBoard() {
-    let gameBoardArray = [];
+    let board = []
 
-    const player = players("shaz", "x");
-    console.log(player);
-
-    function displayDashboard () {
+    function buildBoard () {
+        board = [];
         
         for (let i = 0; i < 3; i++) {
             //console.log("x");
             const rowArray = [];
             for (let j = 0; j < 3; j++) {
-                console.log("o");
                 
-                rowArray.push("O");
+                rowArray.push("");
             }
-            gameBoardArray.push(rowArray);
-        } 
+            board.push(rowArray);
+        }  
        
-        return gameBoardArray;
+        //return board;
     }
 
+    const getBoard = () => board;
+
+    const resetBoard = () => {
+        buildBoard();
+        getBoard();
+    };
+
+    const setMarkerOnBoard = (row, col, marker) => {
+        if (board[row][col] === "") {
+            board[row][col] = marker;
+        }
+        //return board;
+    }
+
+    //setMarkerOnBoard(0, 1, "x" );
+    //console.log(setMarkerOnBoard(0, 1, "o"));
+
     return {
-        displayDashboard,
+        buildBoard,
+        resetBoard,
+        setMarkerOnBoard,
+        getBoard
     };
 }  
 
-const dashboard = gameBoard();
 
-console.log(dashboard);
-console.log(dashboard.displayDashboard());
-
-//console.log(dashboard.players("sharon"));
-
-//dashboard();
-function game() { 
+function gameWinningState (board) {
+   
     /* ['O', 'O', 'O'] 
        ['O', 'O', 'O']
        ['O', 'O', 'O']
 
      */
 
-    //const playCard = ["X", "O"];
-    const score = 0;
-
-    const setScore = (score) => score++;
-
-    const getScore = () => score;
-
-
-    const currentArray = gameBoard();
-    console.log(currentArray);
-    console.log(currentArray.displayDashboard());
-    let gameBoardArray = currentArray.displayDashboard();
-
-    let firstRowItem1 = gameBoardArray[0][0];
-    console.log(firstRowItem1);
-    let firstRowItem2 = gameBoardArray[0][1];
-    console.log(firstRowItem2);
-    let firstRowItem3 = gameBoardArray[0][2];
-    console.log(firstRowItem3);
-
-    let secondRowItem1 = gameBoardArray[1][0];
-    console.log(secondRowItem1);
-    let secondRowItem2 = gameBoardArray[1][1];
-    console.log(secondRowItem2);
-    let secondRowItem3 = gameBoardArray[1][2];
-    console.log(secondRowItem3);
-
-
-    let thirdRowItem1 = gameBoardArray[2][0];
-    console.log(thirdRowItem1);
-    let thirdRowItem2 = gameBoardArray[2][1];
-    console.log(thirdRowItem2);
-    let thirdRowItem3 = gameBoardArray[2][2];
-    console.log(thirdRowItem3);
-
-    /* ['O', 'O', 'O'] 
-       ['O', 'O', 'O']
-       ['O', 'O', 'O']
-
-     */
-
-    let firstColumnItem1 = gameBoardArray[0][0];
-    console.log(firstColumnItem1);
-    let firstColumnItem2 = gameBoardArray[1][0];
-    console.log(firstColumnItem2);
-    let firstColumnItem3 = gameBoardArray[2][0];
-    console.log(firstColumnItem3);
-
-    let secondColumnItem1 = gameBoardArray[0][1];
-    console.log(secondColumnItem1);
-    let secondColumnItem2 = gameBoardArray[1][1];
-    console.log(secondColumnItem2);
-    let secondColumnItem3 = gameBoardArray[2][1];
-    console.log(secondColumnItem3);
-
-    let thirdColumnItem1 = gameBoardArray[0][2];
-    console.log(thirdColumnItem1);
-    let thirdColumnItem2 = gameBoardArray[1][2];
-    console.log(thirdColumnItem2);
-    let thirdColumnItem3 = gameBoardArray[2][2];
-    console.log(thirdColumnItem3);
-
-    /* ['O', 'O', 'O'] 
-       ['O', 'O', 'O']
-       ['O', 'O', 'O']
-
-     */
-    /*let firstDiagonalItem1 = gameBoardArray[0][0];
-    console.log(firstDiagonalItem1);
-    let firstDiagonalItem2 = gameBoardArray[1][1];
-    console.log(firstDiagonalItem2);
-    let firstDiagonalItem3 = gameBoardArray[2][2];
-    console.log(firstDiagonalItem3);
-
-
-    let secondDiagonalItem1 = gameBoardArray[0][2];
-    console.log(secondDiagonalItem1);
-    let secondDiagonalItem2 = gameBoardArray[1][1];
-    console.log(secondDiagonalItem2);
-    let secondDiagonalItem3 = gameBoardArray[2][0];
-    console.log(secondDiagonalItem3);
-*/
-
-    if (firstRowItem1 != "" && firstRowItem1 === firstRowItem2 != "" && firstRowItem2 === firstRowItem3 != "") {
-        console.log("you win");
-        setScore(score);
+    const winningLines = [
+        //rows
+        [[0, 0], [0, 1], [0, 2]],
+        [[1, 0], [1, 1], [1, 2]],
+        [[2, 0], [2, 1], [2, 2]],
        
-    }
-    if (secondRowItem1 != "" && secondRowItem1 === secondRowItem2 != "" && secondRowItem2 === secondRowItem3 != "") {
-        console.log("you win");
-        setScore(score);
-        getScore();
-    }
+       //column 
+        [[0, 0], [1,0], [2,0]],
+        [[0, 1], [1,1], [2,1]],
+        [[0, 2], [1,2], [2,2]],
+       
+        //diagonals
+        [[0, 0], [1, 1], [2, 2]],
+        [[0, 2], [1, 1], [2, 0]]
+       
+    ]
 
-    if (thirdRowItem1 != "" && thirdRowItem1 === thirdRowItem2 != "" && thirdRowItem2 === thirdRowItem3 != "") {
-        console.log("you win");
-        setScore(score);
-        getScore();
-    }
-    if (firstColumnItem1 != "" && firstColumnItem1 === firstColumnItem2 != "" && firstColumnItem2 === firstColumnItem3 != "") {
-        console.log("you win");
-        setScore(score);
-        getScore();
-    }
-    if (secondColumnItem1 != "" && secondColumnItem1 === secondColumnItem2 != "" && secondColumnItem2 === secondColumnItem3 != "") {
-        console.log("you win");
-        setScore(score);
-        getScore();
-    }
-    if (thirdColumnItem1 != "" && thirdColumnItem1 === thirdColumnItem2 != "" && thirdColumnItem2 === thirdColumnItem3 != "") {
-        console.log("you win");
-        setScore(score);
-        getScore();
-    }
-    if (firstColumnItem1 != "" && firstColumnItem1 === secondColumnItem2 != "" && secondColumnItem2 === thirdColumnItem3 != "") {
-        console.log("you win");
-        setScore(score);
-        getScore();
-    }
-    if (thirdColumnItem1 != "" && thirdColumnItem1 === secondColumnItem2 != "" && secondColumnItem2 === firstColumnItem1 != "") {
-        console.log("you win");
-        setScore(score);
-        getScore();
-    }
-    else {
-        console.log("its a draw");
-        setScore(score);
-        getScore();
-    }
+    for (const lines of winningLines) {
+        const [a, b, c] = lines;
+        console.log(a, b, c);
 
- } 
-game();
-
+        if (board[a[0]][a[1]] != "" &&
+            board[a[0]][a[1]] === board[b[0]][b[1]] &&
+            board[a[0]][a[1]] === board[c[0]][c[1]] 
+        ) {
+            return true;
+        }
+    }
+    return false;
+   
+}
 
 function players(name="Becky", marker="O") {
     return {
@@ -187,3 +96,62 @@ function players(name="Becky", marker="O") {
 console.log(players("sharon", "X"));
 
 console.log(players());
+
+
+function game() { 
+   
+    //const score = 0;
+
+    //const setScore = (score) => score++;
+
+   // const getScore = () => score;
+
+
+    const newBoard = gameBoard();
+    console.log(newBoard);
+    //console.log(newBoard.buildBoard());
+    newBoard.buildBoard();
+    //let currentGameBoard = newBoard.buildBoard();
+    //console.log(buildGameBoard);
+    currentGameBoard = newBoard.getBoard();
+    console.log(currentGameBoard);
+
+    const player1 = players("sharon", "x");
+    const player2 = players("becky", "y");
+
+    //let currentPlayer = player1;
+    let currentPlayer = player1;
+
+    for (let turn = 0; turn < 9; turn++) {
+
+        if (currentGameBoard) {
+            newBoard.setMarkerOnBoard(0, 1, currentPlayer.marker);
+           
+            console.log(newBoard.getBoard());
+            console.log(currentGameBoard);
+            const winningState = gameWinningState(newBoard.getBoard());
+            if (winningState) {
+                console.log(`${currentPlayer.name} has won `);
+                break;
+    
+            }
+            if (currentPlayer === player1) {
+                currentPlayer = player2;
+            }else {
+                currentPlayer = player1;
+                }
+        
+            //currentPlayer = player2;
+            console.log(`its ${currentPlayer.name}'s turn`);
+            newBoard.setMarkerOnBoard(1, 2, currentPlayer.marker);
+            //console.log("its a draw");
+            }
+            if (turn === 9 && currentGameBoard !== "" && !winningState) {
+                console.log("its a drew");
+                newBoard.resetBoard();
+            }
+        }
+        
+    }
+    
+game();
