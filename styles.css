@@ -8,6 +8,29 @@ body {
     background-color: yellowgreen;
 }
 
+form {
+    width: 700px;
+    height: 400px;
+    background-color: blueviolet;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+}
+fieldset {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+    
+}
+
+fieldset button {
+    display: block;
+    margin-top: 10px;
+   
+}
+
 .container {
     background-color: blue;
     display: flex;

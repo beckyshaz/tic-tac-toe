@@ -29,6 +29,9 @@ function gameBoard() {
     };
 
     const setMarkerOnBoard = (row, col, marker) => {
+        /*for (row = 0; row < board.length; row++) {
+            for (column = 0; column < board.length; column++)
+        }*/
         if (board[row][col] === "") {
             board[row][col] = marker;
         }
@@ -39,15 +42,19 @@ function gameBoard() {
     //console.log(setMarkerOnBoard(0, 1, "o"));
 
     function displayBoard() {
+        //container.innerHTML = "";
         const container = document.querySelector(".container");
         for (let i = 0; i < board.length; i++) {
            //const container = document.querySelector(".container");
            const outerDiv = document.createElement("div");
            outerDiv.classList = "outer-div";
-           for (let j = 0; j < 3; j++) {
+           for (let j = 0; j < board.length; j++) {
             const div = document.createElement("div");
             div.className = "cell";
-            div.innerHTML = board[i][j];
+            div.dataset.row = i;
+            div.dataset.col = j;
+            div.innerHTML = j;
+            console.log(i, j);
             div.style.backgroundColor = "red";
             outerDiv.appendChild(div);
            }
@@ -94,7 +101,6 @@ function gameWinningState (board) {
 
     for (const lines of winningLines) {
         const [a, b, c] = lines;
-        console.log(a, b, c);
 
         if (board[a[0]][a[1]] != "" &&
             board[a[0]][a[1]] === board[b[0]][b[1]] &&
@@ -107,79 +113,126 @@ function gameWinningState (board) {
    
 }
 
-function players(name="Becky", marker="O") {
-    return {
-        name,
-        marker
+function players(player1Name, player2Name, player1Marker, player2Marker) {
 
+    const getPlayer1Name = () => player1Name;
+    const getPlayer2Name = () => player2Name;
+    const getPlayer1Marker = () => player1Marker;
+    const getPlayer2Marker = () => player2Marker;
+
+    return {
+       /*/ getPlayer1Name: () => player1Name,
+        getplayer2Name: () => player2Name,
+        getplayer1Marker: () => player1Marker,
+        getplayer2Marker: () => player2Marker*/
+    
+        getPlayer1Name,
+        getPlayer2Name,
+        getPlayer1Marker,
+        getPlayer2Marker
     }
 
+    
 }
 
-console.log(players("sharon", "X"));
+console.log(players(document.querySelector(".player1-name").value,
+document.querySelector(".player2-name").value,
+document.querySelector(".player1-marker").value,
+document.querySelector(".player2-marker").value,
+));
 
-console.log(players());
+/*const getCellCoordinate = () => {
+    let divCell = document.querySelectorAll(".cell");
+    divCell.forEach(cell => cell.addEventListener("click", () => {
+        const row = Number(cell.dataset.row);
+        const col = Number(cell.dataset.col);
+    });*/
 
 
 function game() { 
-   
-    //const score = 0;
-
-    //const setScore = (score) => score++;
-
-   // const getScore = () => score;
-
-
+    
     const newBoard = gameBoard();
     console.log(newBoard);
-    //console.log(newBoard.buildBoard());
+
     newBoard.buildBoard();
-    //let currentGameBoard = newBoard.buildBoard();
-    //console.log(buildGameBoard);
-    currentGameBoard = newBoard.getBoard();
+    
+    const currentGameBoard = newBoard.getBoard();
 
     console.log(currentGameBoard);
 
     newBoard.displayBoard()
-
-    const player1 = players("sharon", "x");
-    const player2 = players("becky", "y");
-
-    //let currentPlayer = player1;
-    let currentPlayer = player1;
-
-    for (let turn = 0; turn < 9; turn++) {
-
-        if (currentGameBoard) {
-            newBoard.setMarkerOnBoard(0, 1, currentPlayer.marker);
-           
-            console.log(newBoard.getBoard());
-            console.log(currentGameBoard);
-            const winningState = gameWinningState(newBoard.getBoard());
-            if (winningState) {
-                console.log(`${currentPlayer.name} has won `);
-                break;
-    
-            }else{
-                if (currentPlayer === player1) {
-                    currentPlayer = player2;
-                }else {
-                    currentPlayer = player1;
-                    }
-            
-                //currentPlayer = player2;
-                console.log(`its ${currentPlayer.name}'s turn`);
-                newBoard.setMarkerOnBoard(1, 2, currentPlayer.marker);
-                //console.log("its a draw");
-                }
-
-            }
-            if (turn === 9 && currentGameBoard !== "" && !winningState) {
-                console.log("its a drew");
-                newBoard.resetBoard();
-            }
-        }
+    const submitButton = document.querySelector(".submit");
+    submitButton.addEventListener("click", (event) => {
         
+        event.preventDefault();
+        const playersDetails = players(
+            document.querySelector(".player1-name").value,
+            document.querySelector(".player2-name").value,
+            document.querySelector(".player1-marker").value,
+            document.querySelector(".player2-marker").value
+        );
+        console.log(playersDetails);
+        const firstPlayerName = playersDetails.getPlayer1Name();
+        console.log(firstPlayerName);
+
+        const firstPlayerMarker = playersDetails.getPlayer1Marker();
+        console.log(firstPlayerMarker);
+
+
+        const secondPlayerName = playersDetails.getPlayer2Name();
+        console.log(secondPlayerName);
+
+        const secondPlayerMarker = playersDetails.getPlayer2Marker();
+         console.log(secondPlayerMarker);
+
+        //let currentPlayer = player1;
+        let currentPlayerName = firstPlayerName;
+        
+        let currentPlayerMarker = firstPlayerMarker;
+        
+        let turn = 0;
+        
+        
+        
+        let divCell = document.querySelectorAll(".cell");
+        divCell.forEach(cell => cell.addEventListener("click", () => {
+            const row = cell.dataset.row.toUpperCase();
+            const col = cell.dataset.col.toUpperCase();
+            console.log(row, col);
+            if (currentGameBoard[row][col] === "") {
+                newBoard.setMarkerOnBoard(row, col, currentPlayerMarker);
+                cell.textContent = currentPlayerMarker;
+                turn++;
+                    //newBoard.displayBoard();
+                console.log(newBoard.getBoard());
+                console.log(currentGameBoard);
+                const winningState = gameWinningState(newBoard.getBoard());
+                if (winningState) {
+                    console.log(`${currentPlayerName} has won `);
+                    return;
+                }else{
+                    if (turn === 9) {
+                        console.log("its a drew");
+                        newBoard.resetBoard();
+                    }
+                    if (currentPlayerName === firstPlayerName) {
+                        currentPlayerName = secondPlayerName;
+                    }else {
+                        currentPlayerName = firstPlayerName;
+                    }
+                    
+                    if (currentPlayerMarker === firstPlayerMarker) {
+                        currentPlayerMarker = secondPlayerMarker;
+                    }else {
+                        currentPlayerMarker = firstPlayerMarker;
+                    }
+                    //currentPlayer = player2;
+                    console.log(`its ${currentPlayerName}'s turn`);
+                    //newBoard.setMarkerOnBoard(col, row, currentPlayerMarker);
+                    //console.log("its a draw");
+                    }
+                }
+            }))
+        });  
     }
-    
 game();
