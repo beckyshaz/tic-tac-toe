@@ -18,18 +18,6 @@ form {
     justify-content: center;
     align-items: center;
 }
-fieldset {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-    
-}
-
-fieldset button {
-    display: block;
-    margin-top: 10px;
-   
-}
 
 .container {
     background-color: blue;
@@ -57,3 +45,4 @@ fieldset button {
     justify-content: center;
     align-items: center;
 }
+
