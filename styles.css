@@ -6,6 +6,7 @@
 
 body {
     background-color: yellowgreen;
+    text-align: center;
 }
 
 form {
@@ -19,13 +20,20 @@ form {
     align-items: center;
 }
 
-.container {
-    background-color: blue;
+.outer-container {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    padding: 40px;
+    gap: 30px;
 }
+
+.container {
+    display: flex;
+    /*justify-content: center;
+    align-items: center;*/
+}
+
 
 /*outer-div {
     background-color: white;
@@ -46,3 +54,57 @@ form {
     align-items: center;
 }
 
+.player1-details, .player2-details {
+    width: 350px;
+    height: 150px;
+    background-color: aqua;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    align-items: center;
+    
+}
+
+/*.player1-details {
+    margin-right: 50px;
+}
+
+.player2-details {
+    margin-left: 50px;
+}*/
+
+.player1-div, .player2-div {
+    height: 50px;
+    width: 150px;
+    background-color: greenyellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.marker1-div, .marker2-div {
+    background-color: yellowgreen;
+    border-radius: 50px;
+    height: 110px;
+    width: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 90px;
+    padding: 20px;
+   
+}
+
+.restart-div {
+    /*align-self: baseline;*/
+
+}
+
+
+.buttons-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}

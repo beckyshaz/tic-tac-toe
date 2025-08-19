@@ -18,32 +18,25 @@ function gameBoard() {
             board.push(rowArray);
         }  
        
-        //return board;
+        return board;
     }
 
     const getBoard = () => board;
 
-    const resetBoard = () => {
-        buildBoard();
-        getBoard();
-    };
-
-    const setMarkerOnBoard = (row, col, marker) => {
-        /*for (row = 0; row < board.length; row++) {
-            for (column = 0; column < board.length; column++)
-        }*/
-        if (board[row][col] === "") {
-            board[row][col] = marker;
-        }
-        //return board;
-    }
-
-    //setMarkerOnBoard(0, 1, "x" );
-    //console.log(setMarkerOnBoard(0, 1, "o"));
-
     function displayBoard() {
-        //container.innerHTML = "";
-        const container = document.querySelector(".container");
+        
+        let container = document.querySelector(".container");
+
+        if (!container) {
+            container = document.createElement("div");
+            container.className = "container";
+            const outerContainer = document.querySelector(".outer-container");
+            outerContainer.appendChild(container);
+
+        }
+
+        container.innerHTML = "";
+
         for (let i = 0; i < board.length; i++) {
            //const container = document.querySelector(".container");
            const outerDiv = document.createElement("div");
@@ -58,11 +51,38 @@ function gameBoard() {
             div.style.backgroundColor = "red";
             outerDiv.appendChild(div);
            }
+           //container.appendChild(parag);
            container.appendChild(outerDiv);
            
         }
-        
     }
+
+    const resetBoard = () => {
+        const newBoard = getBoard();
+        console.log(newBoard);
+
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board.length; j++) {
+                board[i][j] = "";
+            }
+
+        };
+        displayBoard();
+    };
+
+    const setMarkerOnBoard = (row, col, marker) => {
+        /*for (row = 0; row < board.length; row++) {
+            for (column = 0; column < board.length; column++)
+        }*/
+        if (board[row][col] === "") {
+            board[row][col] = marker;
+        }
+       // return board;
+    }
+
+    //setMarkerOnBoard(0, 1, "x" );
+    //console.log(setMarkerOnBoard(0, 1, "o"));
+
 
     return {
         buildBoard,
@@ -113,7 +133,28 @@ function gameWinningState (board) {
    
 }
 
-function players(player1Name, player2Name, player1Marker, player2Marker) {
+function players(player1Name, player2Name) {
+
+    let player1Marker = "o";
+
+    let player2Marker = "x";
+
+    let scores = {
+        [player1Name]: 0,
+        [player2Name]: 0
+    };
+
+    const setScore =  (name) => {
+        scores[name] += 1; 
+    }
+
+    const getScore = (name) => scores[name];
+
+    const resetScore = () => {
+        for (let key in scores) {
+            scores[key] = 0;
+        }
+    } 
 
     const getPlayer1Name = () => player1Name;
     const getPlayer2Name = () => player2Name;
@@ -129,16 +170,17 @@ function players(player1Name, player2Name, player1Marker, player2Marker) {
         getPlayer1Name,
         getPlayer2Name,
         getPlayer1Marker,
-        getPlayer2Marker
+        getPlayer2Marker,
+        setScore,
+        getScore,
+        resetScore
     }
 
     
 }
 
 console.log(players(document.querySelector(".player1-name").value,
-document.querySelector(".player2-name").value,
-document.querySelector(".player1-marker").value,
-document.querySelector(".player2-marker").value,
+document.querySelector(".player2-name").value
 ));
 
 /*const getCellCoordinate = () => {
@@ -158,6 +200,8 @@ function game() {
     
     const currentGameBoard = newBoard.getBoard();
 
+    
+
     console.log(currentGameBoard);
     const form = document.querySelector("form");
 
@@ -171,14 +215,15 @@ function game() {
         const playersDetails = players(
             document.querySelector(".player1-name").value,
             document.querySelector(".player2-name").value,
-            document.querySelector(".player1-marker").value,
-            document.querySelector(".player2-marker").value
         );
         form.style.display = "none";
-        newBoard.displayBoard();
+        //newBoard.displayBoard();
+        const gameTitle = document.querySelector(".game-title");
+        gameTitle.innerHTML = "TIC-TAC-TOE GAME";
+
         const player1DetailsDiv = document.createElement("div");
         player1DetailsDiv.className = "player1-details"
-        player1DetailsDiv.style.backgroundColor = "yellow";
+    
         const player1Div = document.createElement("div");
         player1Div.className = "player1-div";
         
@@ -193,31 +238,69 @@ function game() {
         const firstPlayerMarker = playersDetails.getPlayer1Marker();
         console.log(firstPlayerMarker);
         player1MarkerDiv.innerHTML = firstPlayerMarker;
-        player1DetailsDiv.style.height = "100px";
-        player1DetailsDiv.style.backgroundColor = "green";
 
-        player1DetailsDiv.appendChild(player1Div, player1MarkerDiv);
-        const container = document.querySelector(".container");
-        container.appendChild(player1DetailsDiv);
+        const player1ScoreDiv = document.createElement("div");
+        
+        
+        player1DetailsDiv.appendChild(player1Div);
+        player1DetailsDiv.appendChild(player1ScoreDiv);
+        player1DetailsDiv.appendChild(player1MarkerDiv);
+        const outerContainer = document.querySelector(".outer-container");
+        outerContainer.appendChild(player1DetailsDiv);
+
+        newBoard.displayBoard();
 
         const player2DetailsDiv = document.createElement("div");
+        player2DetailsDiv.className = "player2-details"
 
+        const player2Div = document.createElement("div");
+        player2Div.className = "player2-div";
     
         const secondPlayerName = playersDetails.getPlayer2Name();
-        player2Div = secondPlayerName;
+        player2Div.innerHTML = secondPlayerName;
         console.log(secondPlayerName);
 
+        const player2MarkerDiv = document.createElement("div");
+        player2MarkerDiv.className = "marker2-div";
+
         const secondPlayerMarker = playersDetails.getPlayer2Marker();
-         console.log(secondPlayerMarker);
+        player2MarkerDiv.innerHTML = secondPlayerMarker;
+        console.log(secondPlayerMarker);
+        const player2ScoreDiv = document.createElement("div");
+
+        player2DetailsDiv.appendChild(player2Div);
+        player2DetailsDiv.appendChild(player2ScoreDiv);
+        player2DetailsDiv.appendChild(player2MarkerDiv);
+        outerContainer.appendChild(player2DetailsDiv);
 
         //let currentPlayer = player1;
+        const restartButtondiv = document.querySelector(".restart-div");
+
+        const restartButton = document.createElement("button");
+        restartButton.classList = "restart-button";
+        restartButton.innerHTML = "Restart";
+        restartButtondiv.appendChild(restartButton);
+        //outerContainer.appendChild(restartButtondiv);
+
+        const newGameDiv = document.querySelector(".new-game");
+
+        const startNewGame = document.createElement("button");
+        startNewGame.classList = "new-game-button";
+        startNewGame.innerHTML = "Start Game";
+        newGameDiv.appendChild(startNewGame);
+
         let currentPlayerName = firstPlayerName;
         
         let currentPlayerMarker = firstPlayerMarker;
         
         let turn = 0;
 
-         let divCell = document.querySelectorAll(".cell");
+        //let divCell = document.querySelectorAll(".cell");
+        //let currentPlayerScore = playersDetails.getScore(firstPlayerName);
+       // console.log(currentPlayerScore);
+        
+       player1ScoreDiv.innerHTML = `Score: ${playersDetails.getScore(firstPlayerName)}`;
+       player2ScoreDiv.innerHTML = `Score: ${playersDetails.getScore(secondPlayerName)}`;
         
         function handleCellClicks(event) {
             const row = event.target.dataset.row.toUpperCase();
@@ -233,7 +316,24 @@ function game() {
                 const winningState = gameWinningState(newBoard.getBoard());
                 if (winningState) {
                     console.log(`${currentPlayerName} has won `);
-                    divCell.forEach(cell => cell.removeEventListener("click", handleCellClicks));
+                    playersDetails.setScore(currentPlayerName);
+                    let currentPlayerScore = playersDetails.getScore(currentPlayerName);
+                    if (currentPlayerName === firstPlayerName) {
+                        player1ScoreDiv.innerHTML = `Score: ${currentPlayerScore}`;
+                    }else{
+                        //currentPlayerScore = playersDetails.getScore(currentPlayerName);
+                        player2ScoreDiv.innerHTML = currentPlayerScore;
+                    }
+
+                    //player1ScoreDiv.innerHTML = playersDetails.getScore(currentPlayerName);
+
+                    //player2ScoreDiv.innerHTML = playersDetails.getScore(currentPlayerName);
+
+                    
+                    outerContainer.removeEventListener("click", containerClicksHandler);
+        
+                    
+
                     return;
                 }else{
                     if (turn === 9) {
@@ -243,8 +343,10 @@ function game() {
                     }else{
                         if (currentPlayerName === firstPlayerName) {
                             currentPlayerName = secondPlayerName;
+                           
                         }else {
                             currentPlayerName = firstPlayerName;
+                            
                         }
                         if (currentPlayerMarker === firstPlayerMarker) {
                             currentPlayerMarker = secondPlayerMarker;
@@ -256,7 +358,37 @@ function game() {
                     }
                 }
             }
-            divCell.forEach(cell => cell.addEventListener("click", handleCellClicks));
+            restartButton.addEventListener("click", () => {
+                //console.log(newboard);
+
+                newBoard.resetBoard();
+                outerContainer.addEventListener("click", containerClicksHandler);
+                //playersDetails.setScore() ;
+                //playersDetails.setScore(secondPlayerName) ;
+
+                //console.log(playersDetails.getScore(firstPlayerName));
+                //player2ScoreDiv.innerHTML = playersDetails.getScore(secondPlayerName);
+        
+
+                //divCell.forEach(cell => cell.addEventListener("click", handleCellClicks));
+                //console.log(newBoard);
+               // newBoard.displayBoard();
+            });
+            startNewGame.addEventListener("click", () => {
+                newBoard.resetBoard();
+                outerContainer.addEventListener("click", containerClicksHandler);
+                playersDetails.resetScore();
+                player1ScoreDiv.innerHTML = `Score: ${playersDetails.getScore(firstPlayerName)}`;
+                player2ScoreDiv.innerHTML = `Score: ${playersDetails.getScore(secondPlayerName)}`;
+        
+            });
+
+            function containerClicksHandler(e) {
+                if (e.target.className === "cell");
+                handleCellClicks(e);
+
+            }
+            outerContainer.addEventListener("click", containerClicksHandler);
         });
     }
 game();
