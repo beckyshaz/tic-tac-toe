@@ -314,7 +314,11 @@ function game() {
                 console.log(newBoard.getBoard());
                 console.log(currentGameBoard);
                 const winningState = gameWinningState(newBoard.getBoard());
+                
                 if (winningState) {
+                   /* let winnerAndDrawDiv = document.createElement("div");
+                    winnerAndDrawDiv.classList = "winner-draw-div";
+                    winnerAndDrawDiv.innerHTML = `${currentPlayerMarker} has won `*/
                     console.log(`${currentPlayerName} has won `);
                     playersDetails.setScore(currentPlayerName);
                     let currentPlayerScore = playersDetails.getScore(currentPlayerName);
@@ -322,8 +326,17 @@ function game() {
                         player1ScoreDiv.innerHTML = `Score: ${currentPlayerScore}`;
                     }else{
                         //currentPlayerScore = playersDetails.getScore(currentPlayerName);
-                        player2ScoreDiv.innerHTML = currentPlayerScore;
+                        player2ScoreDiv.innerHTML = `Score: ${currentPlayerScore}`;
                     }
+
+                    let winnerDiv = document.createElement("div");
+                    winnerDiv.classList = "winner-div";
+                    winnerDiv.innerHTML = `${currentPlayerMarker} won `
+                    outerContainer.appendChild(winnerDiv);
+
+                    setTimeout(() => {
+                        outerContainer.removeChild(winnerDiv);
+                    }, 2500);
 
                     //player1ScoreDiv.innerHTML = playersDetails.getScore(currentPlayerName);
 
@@ -331,14 +344,20 @@ function game() {
 
                     
                     outerContainer.removeEventListener("click", containerClicksHandler);
-        
-                    
-
-                    return;
                 }else{
                     if (turn === 9) {
-
                         console.log("its a draw");
+                        let drawDiv = document.createElement("div");
+                        drawDiv.classList = "draw-div";
+                        drawDiv.innerHTML = "Its a Draw";
+                        outerContainer.appendChild(drawDiv);
+                        
+                        
+                        setTimeout(() => {
+                            outerContainer.removeChild(drawDiv);
+                        }, 2500);
+                        
+                        outerContainer.removeEventListener("click", containerClicksHandler);
                         //newBoard.resetBoard();
                     }else{
                         if (currentPlayerName === firstPlayerName) {
@@ -363,6 +382,10 @@ function game() {
 
                 newBoard.resetBoard();
                 outerContainer.addEventListener("click", containerClicksHandler);
+                turn = 0; 
+                currentPlayerName = firstPlayerName; 
+                currentPlayerMarker = firstPlayerMarker;
+            
                 //playersDetails.setScore() ;
                 //playersDetails.setScore(secondPlayerName) ;
 
@@ -378,6 +401,10 @@ function game() {
                 newBoard.resetBoard();
                 outerContainer.addEventListener("click", containerClicksHandler);
                 playersDetails.resetScore();
+                turn = 0; 
+                currentPlayerName = firstPlayerName; // always let Player 1 start
+                currentPlayerMarker = firstPlayerMarker;
+            
                 player1ScoreDiv.innerHTML = `Score: ${playersDetails.getScore(firstPlayerName)}`;
                 player2ScoreDiv.innerHTML = `Score: ${playersDetails.getScore(secondPlayerName)}`;
         

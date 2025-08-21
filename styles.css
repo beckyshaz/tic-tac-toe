@@ -32,6 +32,7 @@ form {
     display: flex;
     /*justify-content: center;
     align-items: center;*/
+    position: relative;
 }
 
 
@@ -107,4 +108,19 @@ form {
     justify-content: center;
     align-items: center;
     gap: 20px;
+}
+
+
+
+.winner-div, .draw-div {
+    position: absolute;
+    height: 50px;
+    width: 400px;
+    background-color: pink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border-radius: 20px;
+
 }
