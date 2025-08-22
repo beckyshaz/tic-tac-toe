@@ -20,31 +20,32 @@ form {
     align-items: center;
 }
 
+form input {
+    padding: 10px;
+    border: 2px dotted red;
+}
+
+form label {
+    color: whitesmoke;
+    font-size: 1.5rem;
+}
+
+.game-title{
+    margin-top: 20px;
+}
+
 .outer-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 20px;
     gap: 30px;
 }
 
 .container {
     display: flex;
-    /*justify-content: center;
-    align-items: center;*/
     position: relative;
 }
-
-
-/*outer-div {
-    background-color: white;
-    width: 600px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-}*/
 
 .cell {
     width: 150px;
@@ -65,14 +66,6 @@ form {
     align-items: center;
     
 }
-
-/*.player1-details {
-    margin-right: 50px;
-}
-
-.player2-details {
-    margin-left: 50px;
-}*/
 
 .player1-div, .player2-div {
     height: 50px;
@@ -97,19 +90,22 @@ form {
    
 }
 
-.restart-div {
-    /*align-self: baseline;*/
-
-}
-
-
 .buttons-div {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 50px;
 }
 
+.restart-button, .new-game-button, .submit {
+    padding: 10px;
+    text-align: center;
+    border-radius: 15px;
+    background-color: rgb(17, 17, 177);
+    color: whitesmoke;
+    height: 40px;
+    width: 100px;
+}
 
 
 .winner-div, .draw-div {
@@ -123,4 +119,10 @@ form {
     font-size: 2rem;
     border-radius: 20px;
 
+}
+
+.winner-div::first-letter {
+    color: red;
+    font-size: 4rem;
+    font-weight: bold;
 }
