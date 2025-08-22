@@ -38,43 +38,67 @@ form label {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
     gap: 30px;
 }
 
 .container {
     display: flex;
+    flex-direction: column;
     position: relative;
+    background-color: aquamarine;
+    width: 450px;
+    height: 450px;
+    justify-content: center;
+    align-items: center;
+}
+
+.outer-div {
+    display: flex;
+    gap: 10px;
 }
 
 .cell {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     border: 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 20px;
+    margin-top: 10px;
+    font-size: 3rem;
+    font-weight: bold;
+    color: red;
+}
+
+.cell:hover {
+    box-shadow: 4px 4px 4px gainsboro;
+    background-color: aqua;
+    border: 2px dotted violet;
 }
 
 .player1-details, .player2-details {
     width: 350px;
     height: 150px;
-    background-color: aqua;
+    background-color: aquamarine;
     display: flex;
     justify-content: space-between;
     padding: 30px;
     align-items: center;
-    
+    border-radius: 10px;
 }
 
 .player1-div, .player2-div {
     height: 50px;
     width: 150px;
-    background-color: greenyellow;
+    background-color: rgb(93, 141, 21);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    border-radius: 10px;
+    color: white;
 }
 
 .marker1-div, .marker2-div {
@@ -107,6 +131,9 @@ form label {
     width: 100px;
 }
 
+.restart-button:hover, .new-game-button:hover, .submit:hover {
+    background-color: violet;
+}
 
 .winner-div, .draw-div {
     position: absolute;

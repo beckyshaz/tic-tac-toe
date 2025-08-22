@@ -43,7 +43,6 @@ function gameBoard() {
             div.className = "cell";
             div.dataset.row = i;
             div.dataset.col = j;
-            div.style.backgroundColor = "red";
             outerDiv.appendChild(div);
            }
            container.appendChild(outerDiv);
